@@ -1,0 +1,2 @@
+yarn run v1.22.5
+$ jest '/media/NTFS_Drive/Documents/Projetos/React/50_GoStack/Nível 05/10_Desafios/Desafio-11-GoRestaurant-Mobile/src/__tests__/pages/FoodDetails.spec.tsx'

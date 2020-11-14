@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { Image } from 'react-native';
 
@@ -30,13 +31,31 @@ interface Food {
 const Favorites: React.FC = () => {
   const [favorites, setFavorites] = useState<Food[]>([]);
 
+  const { addListener } = useNavigation();
+
   useEffect(() => {
     async function loadFavorites(): Promise<void> {
       // Load favorite foods from api
+      const response = await api.get<Food[]>('favorites');
+
+      const favoritesArray = response.data.map(food => {
+        return {
+          ...food,
+          formattedPrice: formatValue(food.price),
+        };
+      });
+
+      setFavorites([...favoritesArray]);
     }
 
     loadFavorites();
-  }, []);
+
+    // const unsubscribe = addListener('focus', () => {
+    //   loadFavorites();
+    // });
+
+    // return unsubscribe;
+  }, [addListener]);
 
   return (
     <Container>

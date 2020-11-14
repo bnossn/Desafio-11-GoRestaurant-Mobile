@@ -21,6 +21,7 @@ const TabRoutes: React.FC = () => (
       },
       inactiveTintColor: '#B7B7CC',
     }}
+    lazy={false}
   >
     <Tab.Screen
       options={{

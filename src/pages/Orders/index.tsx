@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { Image } from 'react-native';
 
@@ -30,13 +31,31 @@ interface Food {
 const Orders: React.FC = () => {
   const [orders, setOrders] = useState<Food[]>([]);
 
+  const { addListener } = useNavigation();
+
   useEffect(() => {
     async function loadOrders(): Promise<void> {
       // Load orders from API
+      const response = await api.get<Food[]>('orders');
+
+      const foodsArray = response.data.map(food => {
+        return {
+          ...food,
+          formattedPrice: formatValue(food.price),
+        };
+      });
+
+      setOrders(foodsArray);
     }
 
     loadOrders();
-  }, []);
+
+    // const unsubscribe = addListener('focus', () => {
+    //   loadOrders();
+    // });
+
+    // return unsubscribe;
+  }, [addListener]);
 
   return (
     <Container>
